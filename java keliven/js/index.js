@@ -12,5 +12,18 @@ function webHandler(event){
         y: button.top + 20
     }
     //cal.distancia cursor
-    let distance = Mat.sqrt(Math.pov())
+    let distance = Mat.sqrt(Math.pov(event,pagex - buttonCenter.z, 2))
+    if (distance < 80){
+        var angle = calculateAngle (event, buttonCenter, distance)
+            leftMod += 10 * angle.cos * (event.pagex < buttonCenter.x ? 1 : -1)
+            topMod += 10 * angle.sin * (event.pagey < buttonCenter.y ? 1 : -1)
+            $('#no').css({top: topMod, left: leftMod, position: 'relative'})
+        
+    }
+}
+
+function calculateAngle(mouse, center, distance){
+    let sin = Math.abs(mouse.pagey - center.y)/distance
+    let cos = Math.abs(mouse.pagex - center.x)/distance
+    return {sin: sin, cos: cos}
 }
